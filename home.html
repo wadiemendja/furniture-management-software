@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="style/style.css">
+    <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+    <script src='https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js'></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-storage.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <center>
+            <a href="home.html">
+                <img src="img/logo.png" alt="Béchar University Logo" id="logo">
+            </a>
+            <div>Furniture Store Management System</div>
+            <div>By Wadie Mendja (@wadiemendja)</div>
+        </center>
+    </header>
+    <div id="container">
+        <div id="actions">
+            <button id="add" class="btn btn-outline-dark">+ Add Product</button>
+            <button id="update" class="btn btn-outline-dark" id="update">Update</button>
+            <button id="delete" class="btn btn-outline-dark"> Delete 
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg>
+            </button>
+            <div id="search">
+                <div class="input-group mb-3">
+                    <input id="search-input" type="text" class="form-control" placeholder="Search for a product.." aria-label="Type to search" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="search-btn">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                            </svg>
+                        </button>
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <div class="alert alert-warning" role="alert" style="text-align:center" id="alert"></div>
+        <div id="pop">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                </div>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="image" accept="image/*" aria-describedby="inputGroupFileAddon01">
+                  <label class="custom-file-label" for="inputGroupFile01" id="imgLab">Choose Image</label>
+                </div>
+            </div>
+            <progress id="prog" value="0" max="100" style="display: none;"></progress>
+            <img src="" id="uploadedImage">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Product name</span>
+                </div>
+                <input type="text" id="productName" class="form-control" placeholder="Name you product" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">product category</span>
+                </div>
+                <input type="text" id="productType" class="form-control" placeholder="Type" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Price </span>
+                </div>
+                <input type="number" id="productPrice" class="form-control" aria-label="Amount (to the nearest dollar)">
+                <div class="input-group-append">
+                  <span class="input-group-text">DZD</span>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Quantity</span>
+                </div>
+                <input type="number" id="productQ" class="form-control" value="1" aria-describedby="basic-addon1">
+            </div>
+            <span id="addToUpdate"></span>
+            <button id="cancel" class="btn btn-warning">Cancel</button>
+        </div>
+        <table class="table table-bordered" id="list">
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Check</th>
+            </tr>
+        </table>
+        <center><div id="none"></div><button id="goBack" class="btn btn-outline-dark">Back to list</button></center>
+    </div>
+    <script type="text/javascript" src="scripts/main.js"></script>
+</body>
+</html>
