@@ -3,7 +3,7 @@
 <h2>App Featuers:</h2>
 
 <h3>1) Security:</h3>
-The software comes with a login page:<br>
+The software comes with a login page:</br>
 
 ![alt text](https://imgur.com/1nyyIbU.png)
 
